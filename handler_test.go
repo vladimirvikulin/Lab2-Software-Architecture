@@ -20,3 +20,16 @@ func (s *EvaluateSuite) TestComputeHandler(c *C) {
 	c.Assert(err, Equals, nil)
 	c.Assert(output.String(), Equals, "4.0")
 }
+
+func (s *EvaluateSuite) TestComputeHandlerError(c *C) {
+	input := "invalid expression -"
+	output := &bytes.Buffer{}
+
+	handler := ComputeHandler{
+		Input:  strings.NewReader(input),
+		Output: output,
+	}
+
+	err := handler.Compute()
+	c.Assert(err, FitsTypeOf, InvalidExpressionError{})
+}
