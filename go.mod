@@ -1,4 +1,3 @@
-// TODO: Переіменуйте на власний модуль.
 module github.com/vladimirvikulin/Lab2-Software-Architecture
 
 go 1.20
