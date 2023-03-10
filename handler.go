@@ -18,7 +18,7 @@ func (ch *ComputeHandler) Compute() error {
 
 	input := string(inputBytes)
 
-	result, err := Evaluate(input)
+	result, err := EvaluatePostfix(input)
 	if err != nil {
 		return err
 	}
