@@ -4,20 +4,30 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
+	. "gopkg.in/check.v1"
 )
 
-func TestPrefixToPostfix(t *testing.T) {
-	res, err := PrefixToPostfix("+ 5 * - 4 2 3")
-	if assert.Nil(t, err) {
-		assert.Equal(t, "4 2 - 3 * 5 +", res)
-	}
+type EvaluateSuite struct{}
+
+var _ = Suite(&EvaluateSuite{})
+
+func TestEvaluate(t *testing.T) {
+	TestingT(t)
 }
 
-func ExamplePrefixToPostfix() {
-	res, _ := PrefixToPostfix("+ 2 2")
-	fmt.Println(res)
-
-	// Output:
-	// 2 2 +
+func (s *EvaluateSuite) TestSimpleExpressions(c *C) {
+	tests := []struct {
+      expr string
+	  want float64
+   }{
+	  {"2 3 +", 5.0},
+      {"5 2 -", 3.0},
+	  {"4 3 *", 12.0},
+      {"6 2 /", 3.0},
+	}
+   for _, tt := range tests {
+      got, err := Evaluate(tt.expr)
+	  c.Assert(err, IsNil)
+      c.Assert(got, Equals, tt.want)
+   }
 }
