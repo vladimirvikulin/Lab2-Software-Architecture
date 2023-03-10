@@ -25,7 +25,7 @@ func (s *EvaluateSuite) TestSimpleExpressions(c *C) {
 		{"6 2 /", 3.0},
 	}
 	for _, tt := range tests {
-		got, err := EvaluatePostifx(tt.expr)
+		got, err := EvaluatePostfix(tt.expr)
 		c.Assert(err, IsNil)
 		c.Assert(got, Equals, tt.want)
 	}
@@ -41,7 +41,7 @@ func (s *EvaluateSuite) TestComplexExpressions(c *C) {
 		{"3 4 2 * 1 5 - 2 3 ^ ^ / +", 3.0001220703125},
 	}
 	for _, tt := range tests {
-		got, err := EvaluatePostifx(tt.expr)
+		got, err := EvaluatePostfix(tt.expr)
 		c.Assert(err, IsNil)
 		c.Assert(got, Equals, tt.want)
 	}
@@ -56,8 +56,23 @@ func (s *EvaluateSuite) TestInvalidExpression(c *C) {
 		{"2 x 3 +"},
 	}
 	for _, tt := range tests {
-		_, err := EvaluatePostifx(tt.expr)
+		_, err := EvaluatePostfix(tt.expr)
 		c.Assert(err, NotNil)
 		c.Assert(err, FitsTypeOf, InvalidExpressionError{})
 	}
+}
+
+func (s *EvaluateSuite) TestDivisionByZero(c *C) {
+	_, err := EvaluatePostfix("2 0 /")
+	c.Assert(err, Not(IsNil))
+}
+
+func ExampleEvaluatePostfix() {
+	result, err := EvaluatePostfix("10 5 + 3 *")
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println(result)
+	}
+	// Output: 45
 }

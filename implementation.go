@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func EvaluatePostifx(expression string) (float64, error) {
+func EvaluatePostfix(expression string) (float64, error) {
 	tokens := strings.Fields(expression)
 
 	stack := make([]float64, 0, len(tokens))
