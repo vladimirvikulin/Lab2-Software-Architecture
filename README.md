@@ -12,8 +12,8 @@ $ go run cmd/example/main.go
 ``` 
 Specify input by flags:
 
--e "expression" 
--f input.txt
+-e "expression"   
+-f input.txt  
 
 Specify output by:
 
